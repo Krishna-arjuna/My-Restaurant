@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Kariyappa</title>
+  <style>
+    .main {
+      font-size: x-large;
+      font-weight: 700;
+      margin-top: 30px;
+      font-variant: inherit;
+      margin-left: -400px;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+ 
+
+<body class="">
+
+  <!-- Header -->
+  <header class=" text-white w-full py-4  flex items-center justify-between px-6">
+    <img src="boss.jpg" alt="hotel logo" width="80">
+
+    <div class="flex-1 text-center">
+      <h1 class="text-5xl font-bold text-gray-800 mb-4">🍴 Hotel Kariyappa</h1>
+      <p class="font-medium text-gray-800">Authentic Taste, Every Bite 🤤</p>
+    </div>
+
+   
+    <button 
+    onclick="window.location.href='index.html'" 
+    class="flex items-center space-x-2 px-4 py-2 border border-gray-400 rounded-lg shadow-sm hover:bg-gray-200 transition">
+    
+    <!-- Icon -->
+    <img src="https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg" alt="User Icon" class="w-6 h-6">
+
+    <!-- Text -->
+    <span class="font-medium text-gray-800">Sign In</span>
+  </button>
+  </header>
+
+  <div class="bg-gray-900 w-full py-4 flex items-center justify-center">
+  <p class="text-white font-bold text-lg mr-4">
+    LET'S ORDER FOR DELIVERY, PICK UP, OR DINE-IN
+  </p>
+  
+  <button onclick="goToPage('zinger.html')" class="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition">
+    Start Order
+  </button>
+  <div class="flex flex-col items-center space-y-4" style="margin-left: 20%;">
+      <img src="https://i.pinimg.com/736x/1a/ef/e4/1aefe43f62486c0547b8cd3e4836c745.jpg" 
+           alt="location logo" width="40" style="margin-top: 5%;"
+           class="cursor-pointer transform transition-transform hover:scale-110 active:scale-125"
+           onclick="openLocation()">
+      <button onclick="openLocation()" 
+              class="bg-red-600 text-white px-3 py-1 rounded-full font-semibold hover:bg-red-700 transition">
+        Find Us
+      </button>
+    </div>
+</div>
+
+  <!-- <h2 class="main">What are you craving today🤤?</h2> -->
+
+  <!-- Menu Section -->
+  <main class="flex flex-col items-center mt-1 w-full px-4">
+    <h2 class="main">What are you craving today🤤?</h2>
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Top Sales</h3>
+
+    <!-- Item Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
+
+      <!-- Example Item -->
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/736x/41/db/07/41db07bea6cae8e874b58058b0390e2a.jpg"
+               class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Chicken Biryani</h3>
+            <p class="text-xs">Rs 140</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('ChickenBiryani', 140)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="ChickenBiryaniCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('ChickenBiryani', 140)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/736x/16/68/68/16686845115e885a54136765d2612afc.jpg" class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Mutton Biryani</h3>
+            <p class="text-xs">Rs 240</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('MuttonBiryani', 240)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="MuttonBiryaniCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('MuttonBiryani', 240)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/1200x/96/df/7b/96df7b304b2cf94288bf4f5f9e32a5bc.jpg" class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Non veg tali</h3>
+            <p class="text-xs">Rs 540</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('Non veg tali', 540)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="Non veg taliCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('Non veg taliCount', 540)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/1200x/a1/3a/78/a13a7886f907aa0ad07784e87136d7ed.jpg" class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Chiken Butter Masala</h3>
+            <p class="text-xs">Rs 180</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('Chiken Butter Masala', 180)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="Chiken Butter MasalaCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('Chiken Butter Masala', 180)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/736x/d2/3d/bb/d23dbbac12c62d7f64c1acae322d156c.jpg" class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Butter Nan</h3>
+            <p class="text-xs">Rs 40</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('Butter Nan', 40)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="Butter NanCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('Butter Nan', 40)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-4 hover:scale-105 transition relative">
+        <div class="relative">
+          <img src="https://i.pinimg.com/736x/60/ae/72/60ae72d9fddbf23de15f15c25b927552.jpg" class="w-full h-48 object-cover rounded-lg">
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white px-2 py-1 rounded">
+            <h3 class="text-sm font-semibold">Egg Curry</h3>
+            <p class="text-xs">Rs 140</p>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center justify-center border border-gray-400 rounded-lg w-full py-2">
+          <button onclick="decreaseItem('Egg Curry', 140)" class="px-3 text-lg font-bold text-gray-700">−</button>
+          <span id="Egg CurryCount" class="px-4 font-semibold">0</span>
+          <button onclick="increaseItem('Egg Curry', 140)" class="px-3 text-lg font-bold text-gray-700">+</button>
+        </div>
+      </div>
+      <!-- Add your other items here... -->
+    </div>
+
+    <!-- Extra Menu Buttons -->
+    <h4 class="text-2xl font-bold text-gray-800 my-8">Try our Menu</h4>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full p-6">
+      <button onclick="goToPage('zinger.html')" class="col-span-1 md:col-span-2 bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="combo.png" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">BUY 2 GET 1 Biriyani</div>
+      </button>
+
+      <button onclick="goToPage('epic.html')" class="bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/06/51/ac/0651ac4cfab5ee6099d8d1f2ee756b18.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Epic Bucket</div>
+      </button>
+
+      <button onclick="goToPage('starters.html')" class="bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/9e/43/58/9e43581fb283687cfbf021eebecbc8fe.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Starters</div>
+      </button>
+
+      <button onclick="goToPage('mandi.html')" class="bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/b5/a9/4a/b5a94a06b2552492b3baca08687ddde0.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Mandi Meals</div>
+      </button>
+
+      <button onclick="goToPage('specials.html')" class="bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/c5/54/6a/c5546ad4d6165dfd059b173516acd6a1.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Our Specials</div>
+      </button>
+
+      <button onclick="goToPage('desserts.html')" class="col-span-1 md:col-span-2 bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/48/85/96/48859676a5629647d0ef9e4960fadca7.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Desserts</div>
+      </button>
+
+      <button onclick="goToPage('beverages.html')" class="bg-white rounded-xl shadow-md hover:scale-105 transition">
+        <img src="https://i.pinimg.com/736x/cf/be/77/cfbe77bcfaac97e6bb623b4c65560c1a.jpg" class="w-full h-72 object-cover">
+        <div class="p-3 text-center font-bold text-lg">Beverages</div>
+      </button>
+    </div>
+
+    <!-- Bill Section -->
+    <div class="mt-10 w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
+      <!-- <h2 class="text-xl font-bold text-gray-800 mb-4">🧾 Your Order</h2>
+      <div id="orderList" class="text-gray-700"></div>
+      <p id="totalBill" class="mt-4 font-semibold text-lg text-green-700">Subtotal: Rs 0</p>
+      <p id="gstBill" class="font-semibold text-md text-blue-700">GST (5%): Rs 0</p>
+      <p id="grandTotal" class="font-bold text-xl text-red-700">Grand Total: Rs 0</p> -->
+      <button onclick="checkout()" class="mt-4 w-full bg-yellow-500 text-white py-2 rounded-lg font-bold hover:bg-yellow-600">
+        Checkout
+      </button>
+    </div>
+  </main>
+
+  <script>
+    let totalBill = 0;
+    let cart = {};
+
+    function increaseItem(item, price) {
+      let countEl = document.getElementById(item + "Count");
+      let count = parseInt(countEl.innerText) + 1;
+      countEl.innerText = count;
+
+      cart[item] = (cart[item] || 0) + 1;
+      totalBill += price;
+      updateBill();
+    }
+
+    function decreaseItem(item, price) {
+      let countEl = document.getElementById(item + "Count");
+      let count = parseInt(countEl.innerText);
+      if (count > 0) {
+        count--;
+        countEl.innerText = count;
+
+        cart[item]--;
+        totalBill -= price;
+        if (cart[item] <= 0) delete cart[item];
+        updateBill();
+      }
+    }
+
+    function updateBill() {
+      let orderList = "";
+      for (let item in cart) {
+        orderList += `${item} x ${cart[item]}<br>`;
+      }
+      document.getElementById("orderList").innerHTML = orderList || "No items yet 🍽️";
+
+      let gst = totalBill * 0.05;
+      let grandTotal = totalBill + gst;
+
+      document.getElementById("totalBill").innerText = "Subtotal: Rs " + totalBill;
+      document.getElementById("gstBill").innerText = "GST (5%): Rs " + gst.toFixed(2);
+      document.getElementById("grandTotal").innerText = "Grand Total: Rs " + grandTotal.toFixed(2);
+    }
+
+    function goToPage(page) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("totalBill", totalBill);
+      window.location.href = page;
+    }
+
+    function checkout() {
+      let gst = totalBill * 0.05;
+      let grandTotal = totalBill + gst;
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("totalBill", totalBill);
+      localStorage.setItem("gst", gst);
+      localStorage.setItem("grandTotal", grandTotal);
+
+      window.location.href = "checkout.html"; 
+    }
+
+    function openLocation() {
+      window.open("https://www.google.com/maps?q=Hotel+Kariyappa", "_blank");
+    }
+  </script>
+</body>
+</html>
