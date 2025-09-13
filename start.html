@@ -19,9 +19,56 @@
  
 
 <body class="">
+<header class="text-white w-full py-4 flex items-center justify-between px-6">
+  <img src="boss.jpg" alt="hotel logo" width="80">
+
+  <div class="flex-1 text-center">
+    <h1 class="text-5xl font-bold text-gray-800 mb-4">🍴 Hotel Kariyappa and kariyamma</h1>
+    <p class="font-medium text-gray-800">Authentic Taste, Every Bite 🤤</p>
+  </div>
+
+  <!-- Dynamic Auth Button / Profile -->
+  <div id="authSection"></div>
+</header>
+
+<script>
+  function renderAuthButton() {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+      // ✅ User is logged in → show profile
+      document.getElementById("authSection").innerHTML = `
+        <div class="flex items-center space-x-3">
+          <img src="${user.picture}" alt="Profile" class="w-10 h-10 rounded-full border border-gray-300">
+          <span class="font-medium text-gray-800">${user.name.split(" ")[0]}</span>
+          <button onclick="logout()" class="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">Logout</button>
+        </div>
+      `;
+    } else {
+      // ❌ User not logged in → show Sign In button
+      document.getElementById("authSection").innerHTML = `
+        <button onclick="window.location.href='index.html'" 
+          class="flex items-center space-x-2 px-4 py-2 border border-gray-400 rounded-lg shadow-sm hover:bg-gray-200 transition">
+          <img src="https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg" 
+            alt="User Icon" class="w-6 h-6">
+          <span class="font-medium text-gray-800">Sign In</span>
+        </button>
+      `;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    renderAuthButton();
+  }
+
+  // Run on page load
+  renderAuthButton();
+</script>
 
   <!-- Header -->
-  <header class=" text-white w-full py-4  flex items-center justify-between px-6">
+  <!-- <header class=" text-white w-full py-4  flex items-center justify-between px-6">
     <img src="boss.jpg" alt="hotel logo" width="80">
 
     <div class="flex-1 text-center">
@@ -34,13 +81,13 @@
     onclick="window.location.href='index.html'" 
     class="flex items-center space-x-2 px-4 py-2 border border-gray-400 rounded-lg shadow-sm hover:bg-gray-200 transition">
     
-    <!-- Icon -->
+   
     <img src="https://i.pinimg.com/736x/3f/94/70/3f9470b34a8e3f526dbdb022f9f19cf7.jpg" alt="User Icon" class="w-6 h-6">
 
-    <!-- Text -->
+    
     <span class="font-medium text-gray-800">Sign In</span>
   </button>
-  </header>
+  </header> -->
 
   <div class="bg-gray-900 w-full py-4 flex items-center justify-center">
   <p class="text-white font-bold text-lg mr-4">
@@ -50,6 +97,7 @@
   <button onclick="goToPage('zinger.html')" class="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition">
     Start Order
   </button>
+
   <div class="flex flex-col items-center space-y-4" style="margin-left: 20%;">
       <img src="https://i.pinimg.com/736x/1a/ef/e4/1aefe43f62486c0547b8cd3e4836c745.jpg" 
            alt="location logo" width="40" style="margin-top: 5%;"
@@ -61,10 +109,30 @@
       </button>
     </div>
 </div>
-
+<div class="bg-gray-900 w-full py-4 flex items-center justify-center">
+  <button onclick="goToPage('mm.html')" class="flex items-center space-x-3 text-white font-bold text-lg">
+    <span>Allow us to know your location</span>
+    <img src="https://i.pinimg.com/736x/1a/ef/e4/1aefe43f62486c0547b8cd3e4836c745.jpg" class="w-10">
+  </button>
+</div> 
+<body class="bg-gray-50">
+  <main class="flex flex-col items-center mt-1 w-full px-4">
+<div class="bg-gray-900 text-white p-4 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <p id="locationDisplay" class="text-sm">📍 Location: Not Set</p>
+      <button onclick="window.location.href='mm.html'" 
+              class="bg-blue-600 px-3 py-2 rounded-lg text-white hover:bg-blue-700">
+        Change
+      </button>
+    </div>
+  </div>
+  </main>
+  <!-- Navbar -->
+  
   <!-- <h2 class="main">What are you craving today🤤?</h2> -->
 
   <!-- Menu Section -->
+   
   <main class="flex flex-col items-center mt-1 w-full px-4">
     <h2 class="main">What are you craving today🤤?</h2>
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Top Sales</h3>
@@ -217,6 +285,7 @@
       </button>
     </div>
   </main>
+  
 
   <script>
     let totalBill = 0;
@@ -281,6 +350,11 @@
 
     function openLocation() {
       window.open("https://www.google.com/maps?q=Hotel+Kariyappa", "_blank");
+    }
+
+     const userLocation = JSON.parse(localStorage.getItem("userLocation"));
+    if (userLocation && userLocation.address) {
+      document.getElementById("locationDisplay").textContent = `📍 ${userLocation.address}`;
     }
   </script>
 </body>

@@ -13,7 +13,10 @@
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "google-auth-library": "^10.3.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0"
   },
-  "description": ""
+  "description": "A restaurant which allows customers to order the food online\r # 🍴 Hotel Kariyappa - Online Ordering System",
+  "devDependencies": {}
 }

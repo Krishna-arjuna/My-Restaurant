@@ -3,13 +3,12 @@ function toggleForms() {
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
 
-  if (loginForm.style.display === "none") {
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-  } else {
-    loginForm.style.display = "none";
-    signupForm.style.display = "block";
-  }
+  loginForm.style.display = loginForm.style.display === "none" ? "block" : "none";
+  signupForm.style.display = signupForm.style.display === "none" ? "block" : "none";
+
+  // Clear messages
+  document.getElementById("loginMessage").textContent = "";
+  document.getElementById("signupMessage").textContent = "";
 }
 
 // Handle Signup
@@ -37,7 +36,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       data.message || data.error;
 
     if (data.message === "Signup successful!") {
-      toggleForms();
+      setTimeout(() => toggleForms(), 1500); // Switch to login after 1.5s
     }
   } catch (err) {
     console.error("Signup error:", err);
@@ -66,7 +65,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     if (data.message === "Login successful!") {
       localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "start.html"; // redirect to your main page
+      window.location.href = "start.html"; // Redirect to main page
     }
   } catch (err) {
     console.error("Login error:", err);

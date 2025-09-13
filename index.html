@@ -5,36 +5,167 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hotel Kariyappa - Login / Signup</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1c1a1a;
+      margin: 0;
+    }
+    .container {
+      background: rgba(205, 198, 198, 0.727);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #827878;
+    }
+    button {
+      background: #333;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+    .message {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-box">
-      <!-- LOGIN FORM -->
-      <form id="loginForm">
-        <h2>Login</h2>
-        <input type="email" id="loginEmail" placeholder="Email" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="submit">Login</button>
-        <p>Not registered? <a href="#" onclick="toggleForms()">Signup</a></p>
-        <p id="loginMessage" class="message"></p>
-      </form>
+  <div class="container" id="authContainer">
+    <!-- LOGIN FORM -->
+    <form id="loginForm">
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p>Not registered? <a href="#" onclick="toggleForms()">Signup</a></p>
+      <div id="google-signin-container" style="margin-top: 10px;"></div>
+      <p id="loginMessage" class="message"></p>
+    </form>
 
-      <!-- SIGNUP FORM -->
-      <form id="signupForm" style="display:none;">
-        <h2>Signup</h2>
-        <input type="text" id="fname" placeholder="First Name" required />
-        <input type="text" id="lname" placeholder="Last Name" required />
-        <input type="text" id="phone" placeholder="Phone" required />
-        <input type="text" id="address" placeholder="Address" required />
-        <input type="email" id="signupEmail" placeholder="Email" required />
-        <input type="password" id="signupPassword" placeholder="Password" required />
-        <button type="submit">Signup</button>
-        <p>Already registered? <a href="#" onclick="toggleForms()">Login</a></p>
-        <p id="signupMessage" class="message"></p>
-      </form>
-    </div>
+    <!-- SIGNUP FORM -->
+    <form id="signupForm" style="display:none;">
+      <h2>Signup</h2>
+      <input type="text" id="fname" placeholder="First Name" required />
+      <input type="text" id="lname" placeholder="Last Name" required />
+      <input type="text" id="phone" placeholder="Phone" required />
+      <input type="text" id="address" placeholder="Address" required />
+      <input type="email" id="signupEmail" placeholder="Email" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <button type="submit">Signup</button>
+      <p>Already registered? <a href="#" onclick="toggleForms()">Login</a></p>
+      <p id="signupMessage" class="message"></p>
+    </form>
   </div>
-
   <script src="script.js"></script>
+
+  <!-- Profile container -->
+  <div id="app"></div>
+
+  <script>
+    // Toggle between login & signup
+    function toggleForms() {
+      document.getElementById("loginForm").style.display =
+        document.getElementById("loginForm").style.display === "none" ? "block" : "none";
+      document.getElementById("signupForm").style.display =
+        document.getElementById("signupForm").style.display === "none" ? "block" : "none";
+    }
+
+    async function handleCredentialResponse(response) {
+      console.log("Google Token:", response.credential);
+
+      const res = await fetch("http://localhost:5000/verify-google-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential: response.credential }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+      localStorage.setItem("jwt", data.token); // store token
+      localStorage.setItem("user", JSON.stringify(data.user)); // store user details
+      window.location.href = "start.html"; // redirect back to main page
+     }
+      else {
+        alert("Login failed!");
+      }
+    }
+
+    function renderProfile(user) {
+      document.getElementById("authContainer").style.display = "none";
+      document.getElementById("app").innerHTML = `
+        <h1>Welcome, ${user.name} 👋</h1>
+        <img src="${user.picture}" style="border-radius:50%; margin-top: 10px;">
+        <p>Email: ${user.email}</p>
+        <button onclick="logout()" style="margin-top:10px; background:red; color:white; padding:5px 10px; border:none; border-radius:5px;">Logout</button>
+      `;
+    }
+
+    function renderSignIn() {
+      const googleContainer = document.getElementById("google-signin-container");
+      googleContainer.innerHTML = `<div class="g_id_signin"></div>`;
+
+      // ✅ Wait until Google script is loaded
+      if (window.google && google.accounts && google.accounts.id) {
+        google.accounts.id.initialize({
+          client_id: "1068739465758-mmhtsv0mo191vr5bbbuv077rbib6cv31.apps.googleusercontent.com",
+          callback: handleCredentialResponse
+        });
+
+        google.accounts.id.renderButton(
+          googleContainer.querySelector(".g_id_signin"),
+          { theme: "outline", size: "large" }
+        );
+      } else {
+        console.warn("Google API not ready yet, retrying...");
+        setTimeout(renderSignIn, 500); // retry after 0.5s
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("jwt");
+      document.getElementById("authContainer").style.display = "block";
+      document.getElementById("app").innerHTML = "";
+      renderSignIn();
+      google.accounts.id.prompt();
+    }
+
+    async function fetchProfile() {
+      const token = localStorage.getItem("jwt");
+      if (!token) return renderSignIn();
+
+      const res = await fetch("http://localhost:5000/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        renderProfile(data.user);
+      } else {
+        localStorage.removeItem("jwt");
+        renderSignIn();
+      }
+    }
+
+    // Run on page load
+    window.onload = fetchProfile;
+  </script>
 </body>
 </html>
